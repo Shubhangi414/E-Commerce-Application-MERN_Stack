@@ -34,10 +34,11 @@
   letter-spacing: 3px;
 }
 
-/* ==========footer============= */ 
+/* =============================
+==========footer============= */
 
-.footer{
-  color: black;
+.footer {
+  color: rgb(141, 114, 163);
   padding: 25px;
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(

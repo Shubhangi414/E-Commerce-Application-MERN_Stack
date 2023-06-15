@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import "../styles/AuthStyles.css";
-import { toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,17 +12,30 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-
+  const navigate = useNavigate();
   //form function
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-try {
-    
-} catch (error) {
-    console.log(error);
-    toast.error('Something went wrong')
-}
+    try {
+      const res = await axios.post(` /api/v1/auth/register`, {
+        name,
+        email,
+        password,
+        phone,
+        address,
+      });
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/login");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
+
 
   return (
     <Layout title="Register - Ecommer App">
@@ -74,6 +88,7 @@ try {
               required
             />
           </div>
+
           <div className="mb-3">
             <input
               type="text"
